@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例-多小球运动</title>
+    <style>
+        body{background-color: #ccc}
+        *{margin:0;padding:0}
+        .box{
+            height:150px;width:150px;
+            background-color: #6ff;
+            position:absolute;
+            top:0;left:0;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class = "box"></div> -->
+
+
+
+
+    <script>
+        run(50)
+        var speed;
+        function run(num){
+            //生成多个小球
+            for(var i = 0; i<num; i++){
+                speed = Math.floor(Math.random()*6+4);//[4,9]的速度随机数
+                var div = document.createElement('div');
+                div.className = 'box'
+                div.speedY = Math.floor(Math.random()*6+4)
+                div.speedX = Math.floor(Math.random()*6+4)
+                document.body.appendChild( div ) 
+            }
+            //对多个小球进行操作
+            var box = document.getElementsByClassName('box'),
+            maxX = document.documentElement.clientWidth - box[0].offsetWidth,
+            maxY = document.documentElement.clientHeight - box[0].offsetHeight;
+            window.onresize = function(){
+                maxX = document.documentElement.clientWidth - box[0].offsetWidth;
+                maxY = document.documentElement.clientHeight - box[0].offsetHeight;
+            }
+            act();
+            function act(){
+                for(var i = 0; i<num; i++){
+                    var ball = box[i],
+                    starttop = ball.offsetTop,
+                    startleft = ball.offsetLeft,
+                    top = starttop + ball.speedY,
+                    left = startleft + ball.speedX;
+                    if( top <=0 || top >= maxY ){
+                        ball.speedY = -ball.speedY;
+                        top = Math.max(0,top);
+                        top = Math.min(maxY,top);
+                        ball.style.background = randomColor();
+                    }
+                    if( left <= 0 || left >= maxX ){
+                        ball.speedX = -ball.speedX;
+                        left = Math.max(0,left);
+                        left = Math.min(maxX,left);
+                        ball.style.background = randomColor();
+                    }
+                    ball.style.top = top + 'px';
+                    ball.style.left = left + 'px';
+                }
+                requestAnimationFrame(act)
+            }
+            function randomColor(){
+    			return "rgb("+ Math.floor(Math.random()*256) +","+ 
+                Math.floor(Math.random()*256) +","+ Math.floor(Math.random()*256) +")";
+    		}
+        } 
+
+
+
+
+
+    </script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案例-小球运动</title>
+    <style>
+        body{background-color: #ccc}
+        *{margin:0;padding:0}
+        #box{
+            height:150px;width:150px;
+            background-color: #6ff;
+            position:absolute;
+            top:0;left:0;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id = "box"></div>
+
+
+    <script>
+       var box = document.getElementById('box'),
+           speedX = 40,
+           speedY = 40,
+           starttop = box.offsetTop,
+           startleft = box.offsetLeft,
+           maxX = document.documentElement.clientWidth-box.offsetWidth,
+           maxY = document.documentElement.clientHeight-box.offsetHeight;
+        window.onresize = function(){
+            maxX = document.documentElement.clientWidth-box.offsetWidth,
+            maxY = document.documentElement.clientHeight-box.offsetHeight;
+        
+        }
+        run()
+        function run(){
+            starttop += speedY;
+            startleft += speedX;
+            if( starttop <= 0 || starttop >= maxY  ){
+                speedY = -speedY;
+                if( starttop <=0 ){
+                    starttop = 0;
+                }else if( starttop >= maxY ){
+                    starttop = maxY;
+                }
+            }
+            if( startleft <= 0 || startleft >= maxX ){
+                speedX = -speedX;
+                if( startleft <= 0 ){
+                    startleft = 0;
+                }else if( startleft >= maxX ){
+                    startleft = maxX;
+                }
+            }
+            box.style.top = starttop + 'px';
+            box.style.left = startleft + 'px';
+            requestAnimationFrame(run)
+
+        }
+            
+
+
+
+
+
+    </script>
+
+
+</body>
+</html>
